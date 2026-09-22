@@ -1,0 +1,300 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>BookWorm – OpenAPI 3.0 Specification</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; background: #ffffff; color: #1f2328; }
+  .page { max-width: 760px; margin: 0 auto; padding: 32px 24px 48px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #57606a; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 28px 0 10px; padding-bottom: 4px; border-bottom: 1px solid #e5e7eb; color: #1f2328; }
+  h3 { font-size: 13px; font-weight: 600; margin: 14px 0 6px; color: #3b82d4; }
+  p { margin-bottom: 8px; color: #1f2328; }
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.3px; margin-right: 4px; }
+  .get    { background: #dbeafe; color: #1d4ed8; }
+  .post   { background: #dcfce7; color: #166534; }
+  .patch  { background: #fef9c3; color: #854d0e; }
+  .delete { background: #fee2e2; color: #991b1b; }
+  .endpoint { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+  .endpoint .path { font-family: "Cascadia Code", "Fira Code", monospace; font-size: 13px; color: #1f2328; }
+  .endpoint .desc { font-size: 12px; color: #57606a; margin-top: 3px; }
+  .endpoint .tags { margin-top: 4px; }
+  .tag-pill { display: inline-block; background: #f0f0f5; color: #57606a; font-size: 11px; padding: 1px 6px; border-radius: 10px; margin-right: 3px; }
+  .auth-pill { display: inline-block; background: #fef3c7; color: #92400e; font-size: 11px; padding: 1px 6px; border-radius: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  th { text-align: left; background: #f7f8fa; padding: 6px 10px; border: 1px solid #e5e7eb; font-weight: 600; color: #57606a; font-size: 12px; }
+  td { padding: 6px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  td code, th code { font-family: monospace; background: #f0f0f5; padding: 1px 4px; border-radius: 3px; font-size: 12px; }
+  .screen-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .screen-card { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; }
+  .screen-card .name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .screen-card ul { padding-left: 16px; font-size: 12px; color: #57606a; }
+  .schema-name { font-family: monospace; font-size: 13px; font-weight: 600; color: #7c5cd8; }
+  .info-box { background: #f0f6ff; border-left: 3px solid #3b82d4; padding: 10px 14px; border-radius: 0 6px 6px 0; margin-bottom: 16px; font-size: 13px; color: #1f2328; }
+  footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>BookWorm — OpenAPI 3.0 Specification</h1>
+  <p class="subtitle">Generated from <strong>Capstone instructions.pptx</strong> · 6 slides · 8 wireframe screens · OpenAPI 3.0.3</p>
+
+  <div class="info-box">
+    <strong>Base URL:</strong> <code>https://api.bookworm.example.com/v1</code><br />
+    <strong>Auth:</strong> Bearer JWT on all authenticated endpoints  · 
+    <strong>Spec file:</strong> <code>bookworm-openapi.yaml</code>
+  </div>
+
+  
+  <h2>Wireframe Analysis</h2>
+  <div class="screen-section">
+    <div class="screen-card">
+      <div class="name">Catalogue / Landing Page</div>
+      <ul>
+        <li>Left sidebar: 19 category filters</li>
+        <li>Top bar: Search, Language, Format, Price Range, Sort</li>
+        <li>Sections: Recommended For You, Bestsellers, New Launches</li>
+        <li>Nav: My Orders, My Wishlist, My Writers, Cart badge, Profile</li>
+      </ul>
+    </div>
+    <div class="screen-card">
+      <div class="name">Product Detail Page</div>
+      <ul>
+        <li>Breadcrumb navigation</li>
+        <li>Cover, back cover, title, author, publisher, ISBN</li>
+        <li>Price, delivery date, format, genres</li>
+        <li>Add to Cart / Add to Wishlist buttons</li>
+        <li>Language, Rating, Copies Sold</li>
+        <li>Author bio, Reviews, Related Reads sidebar</li>
+      </ul>
+    </div>
+    <div class="screen-card">
+      <div class="name">Shopping Cart / Checkout</div>
+      <ul>
+        <li>Cart items with quantity controls (−/+)</li>
+        <li>Address form: First/Last name, Address, Email, City, Pin, Phone, State, Country</li>
+        <li>"Use Saved Address" toggle</li>
+        <li>Grand Total panel: subtotal, tax, delivery, coupon, discount, total</li>
+        <li>"Pay Now" CTA</li>
+      </ul>
+    </div>
+    <div class="screen-card">
+      <div class="name">Payment Screen</div>
+      <ul>
+        <li>Payable amount displayed</li>
+        <li>Payment method tabs: Credit Card, Debit Card, UPI, Wallet</li>
+        <li>Card fields: Card Number, Name, CVV, Expiry (MM/YYYY)</li>
+        <li>"Pay Now" button</li>
+      </ul>
+    </div>
+    <div class="screen-card">
+      <div class="name">Purchase Confirmation</div>
+      <ul>
+        <li>Success checkmark icon</li>
+        <li>"Your purchase of the following reads is successful"</li>
+        <li>Purchased book cards with details</li>
+        <li>"Continue your Shopping" CTA</li>
+      </ul>
+    </div>
+    <div class="screen-card">
+      <div class="name">My Orders (implied)</div>
+      <ul>
+        <li>Order history list</li>
+        <li>Buy Again feature per order</li>
+        <li>Order detail view</li>
+      </ul>
+    </div>
+  </div>
+
+  
+  <h2>API Endpoints (23 total)</h2>
+
+  <h3>Catalogue</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/catalogue</span>
+    <div class="desc">List books with filters: category, language, format, price range, sort</div>
+    <div class="tags"><span class="tag-pill">Catalogue</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/catalogue/search?q={keyword}</span>
+    <div class="desc">Full-text search across title, author, description</div>
+    <div class="tags"><span class="tag-pill">Catalogue</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/catalogue/categories</span>
+    <div class="desc">Return all 19 category options for the sidebar</div>
+    <div class="tags"><span class="tag-pill">Catalogue</span></div>
+  </div>
+
+  <h3>Books</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/books/{bookId}</span>
+    <div class="desc">Full book detail: cover, author bio, rating, sales, publisher, ISBN</div>
+    <div class="tags"><span class="tag-pill">Books</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/books/{bookId}/related</span>
+    <div class="desc">Related Reads sidebar items</div>
+    <div class="tags"><span class="tag-pill">Books</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/books/{bookId}/reviews</span>
+    <div class="desc">Paginated reviews list for a book</div>
+    <div class="tags"><span class="tag-pill">Books</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/books/{bookId}/reviews</span>
+    <div class="desc">Submit a star rating and written review (max 100 chars)</div>
+    <div class="tags"><span class="tag-pill">Books</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Recommendations</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/recommendations?section={section}</span>
+    <div class="desc">Returns recommended_for_you, bestsellers, new_launches sections</div>
+    <div class="tags"><span class="tag-pill">Recommendations</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Cart</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/cart</span>
+    <div class="desc">Retrieve current cart contents</div>
+    <div class="tags"><span class="tag-pill">Cart</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/cart/items</span>
+    <div class="desc">Add a book to cart</div>
+    <div class="tags"><span class="tag-pill">Cart</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge patch">PATCH</span><span class="path">/cart/items/{bookId}</span>
+    <div class="desc">Update quantity (triggered by − / + controls in wireframe)</div>
+    <div class="tags"><span class="tag-pill">Cart</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge delete">DELETE</span><span class="path">/cart/items/{bookId}</span>
+    <div class="desc">Remove a book from cart</div>
+    <div class="tags"><span class="tag-pill">Cart</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Wishlist</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/wishlist</span>
+    <div class="desc">List all wishlist items (My Wishlist nav)</div>
+    <div class="tags"><span class="tag-pill">Wishlist</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/wishlist/{bookId}</span>
+    <div class="desc">Add to wishlist (Add to Wishlist button on product page)</div>
+    <div class="tags"><span class="tag-pill">Wishlist</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge delete">DELETE</span><span class="path">/wishlist/{bookId}</span>
+    <div class="desc">Remove from wishlist</div>
+    <div class="tags"><span class="tag-pill">Wishlist</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Checkout</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/checkout/summary</span>
+    <div class="desc">Price breakdown: subtotal, tax, delivery charges, discount, total</div>
+    <div class="tags"><span class="tag-pill">Checkout</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/checkout/coupon</span>
+    <div class="desc">Apply coupon code and return updated summary with discount</div>
+    <div class="tags"><span class="tag-pill">Checkout</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/checkout/addresses</span>
+    <div class="desc">List saved addresses ("Use Saved Address" toggle)</div>
+    <div class="tags"><span class="tag-pill">Checkout</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/checkout/addresses</span>
+    <div class="desc">Save a new delivery address</div>
+    <div class="tags"><span class="tag-pill">Checkout</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Payments</h3>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/payments</span>
+    <div class="desc">Initiate payment — Credit Card, Debit Card, UPI, or Wallet</div>
+    <div class="tags"><span class="tag-pill">Payments</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/payments/{paymentId}</span>
+    <div class="desc">Poll payment status; returns orderId on success for confirmation screen</div>
+    <div class="tags"><span class="tag-pill">Payments</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  <h3>Orders</h3>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/orders</span>
+    <div class="desc">Paginated order history (My Orders nav)</div>
+    <div class="tags"><span class="tag-pill">Orders</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge get">GET</span><span class="path">/orders/{orderId}</span>
+    <div class="desc">Order detail with books, address, payment method</div>
+    <div class="tags"><span class="tag-pill">Orders</span><span class="auth-pill">Auth required</span></div>
+  </div>
+  <div class="endpoint">
+    <span class="badge post">POST</span><span class="path">/orders/{orderId}/buy-again</span>
+    <div class="desc">Re-add all items from a past order to cart ("Buy Again" feature)</div>
+    <div class="tags"><span class="tag-pill">Orders</span><span class="auth-pill">Auth required</span></div>
+  </div>
+
+  
+  <h2>Key Data Models</h2>
+  <table>
+    <tr><th>Schema</th><th>Key Fields</th></tr>
+    <tr><td><span class="schema-name">BookSummary</span></td><td>bookId, title, author, coverImageUrl, format, genres, price (INR), deliveryDate</td></tr>
+    <tr><td><span class="schema-name">BookDetail</span></td><td>+ publisher, isbn, language, rating, totalRatings, totalSold, authorBio, backCoverSummary</td></tr>
+    <tr><td><span class="schema-name">Cart</span></td><td>cartId, items[ ], itemCount, subtotal, currency</td></tr>
+    <tr><td><span class="schema-name">CartItem</span></td><td>bookId, title, author, format, unitPrice, quantity, deliveryDate</td></tr>
+    <tr><td><span class="schema-name">CheckoutSummary</span></td><td>priceSubtotal, tax, deliveryCharges, couponCode, discount, totalAmount</td></tr>
+    <tr><td><span class="schema-name">Address</span></td><td>firstName, lastName, addressLine, city, state, pin, country, email, phoneNumber</td></tr>
+    <tr><td><span class="schema-name">PaymentRequest</span></td><td>addressId, paymentMethod (credit_card|debit_card|upi|wallet), amount, card/upi details</td></tr>
+    <tr><td><span class="schema-name">CardDetails</span></td><td>cardNumber (16 digits), nameOnCard, cvv (3-4 digits), expiryDate (MM/YYYY)</td></tr>
+    <tr><td><span class="schema-name">PaymentResponse</span></td><td>paymentId, status (pending|processing|success|failed), payableAmount</td></tr>
+    <tr><td><span class="schema-name">Order</span></td><td>orderId, status, items[ ], totalAmount, deliveryAddress, paymentMethod, placedAt</td></tr>
+    <tr><td><span class="schema-name">Review</span></td><td>reviewId, reviewerName, rating (1-5), body (max 100), createdAt</td></tr>
+    <tr><td><span class="schema-name">Category</span></td><td>slug, displayName</td></tr>
+  </table>
+
+  
+  <h2>Common Query Parameters</h2>
+  <table>
+    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>category</code></td><td>string</td><td>Category slug (romance, mystery, science-fiction, fantasy, …)</td></tr>
+    <tr><td><code>language</code></td><td>string</td><td>Language filter (English, Hindi, …)</td></tr>
+    <tr><td><code>format</code></td><td>enum</td><td>Paperback | Hardcover | eBook</td></tr>
+    <tr><td><code>priceMin / priceMax</code></td><td>float</td><td>Price range in INR</td></tr>
+    <tr><td><code>sortBy</code></td><td>enum</td><td>relevance | price_asc | price_desc | newest | bestseller</td></tr>
+    <tr><td><code>page</code></td><td>integer</td><td>Page number (default: 1)</td></tr>
+    <tr><td><code>limit</code></td><td>integer</td><td>Items per page (default: 20, max: 100)</td></tr>
+  </table>
+
+  
+  <h2>HTTP Status Code Reference</h2>
+  <table>
+    <tr><th>Code</th><th>Meaning</th><th>When</th></tr>
+    <tr><td>200</td><td>OK</td><td>Successful GET / PATCH</td></tr>
+    <tr><td>201</td><td>Created</td><td>POST created a resource (review, address, wishlist)</td></tr>
+    <tr><td>202</td><td>Accepted</td><td>Payment initiated (async)</td></tr>
+    <tr><td>204</td><td>No Content</td><td>DELETE successful</td></tr>
+    <tr><td>400</td><td>Bad Request</td><td>Invalid parameters</td></tr>
+    <tr><td>401</td><td>Unauthorized</td><td>Missing/invalid JWT</td></tr>
+    <tr><td>404</td><td>Not Found</td><td>Book, order, or payment not found</td></tr>
+    <tr><td>409</td><td>Conflict</td><td>Book already in wishlist</td></tr>
+    <tr><td>422</td><td>Unprocessable</td><td>Invalid coupon or payment validation error</td></tr>
+  </table>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>
